@@ -1,12 +1,35 @@
+import React, { useState } from "react";
 import "./App.css";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
+import BookSessionModal from "./BookSessionModal";
 
 const backgroundUrl = "/assets/mainHeader.jpg";
 const aboutImageOne = "/assets/exampleImage1.jpg";
 const aboutImageTwo = "/assets/exampleImage2.jpg";
 
 function App() {
+  const events = [{ title: "Today's event", date: new Date() }];
+  const [bookingTimeSelected, setBookingTimeSelected] = useState();
+  const addEvent = (values) => {
+    console.log(values);
+  };
+
+  console.log(events);
+
   return (
     <>
+      {bookingTimeSelected && (
+        <>
+          <BookSessionModal
+            bookingTimeSelected={bookingTimeSelected}
+            onClose={() => setBookingTimeSelected()}
+            addEvent={addEvent}
+          />
+        </>
+      )}
       <div
         className="hero min-h-screen"
         style={{
@@ -14,15 +37,22 @@ function App() {
         }}
       >
         <div className="hero-overlay bg-opacity-60"></div>
-        <div className="text-center hero-content text-neutral-content">
-          <div className="max-w-md">
-            <h1 className="mb-5 text-5xl font-bold">Hello there</h1>
-            <p className="mb-5">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
-            </p>
-            <button className="btn btn-primary">Get Started</button>
+        <div className="text-center flex justify-center align-center text-neutral w-full container">
+          <div className="md:w-8/12 lg:6/12 bg-white shadow-xl rounded p-3 h-auto">
+            <FullCalendar
+              initialView="timeGridWeek"
+              firstDay={1}
+              slotMinTime="09:00:00"
+              slotMaxTime="18:00:00"
+              slotLabelInterval="00:20:00"
+              slotDuration="00:20:00"
+              dateClick={(info) => {
+                setBookingTimeSelected(info.dateStr);
+              }}
+              allDaySlot={false}
+              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+              events={events}
+            />
           </div>
         </div>
       </div>
