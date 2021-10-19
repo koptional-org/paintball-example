@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { format } from "date-fns";
+import { getTime } from "date-fns";
 
 const BookSessionModal = ({ bookingTimeSelected, onClose, addEvent }) => {
   const [name, setName] = useState("");
@@ -41,7 +42,7 @@ const BookSessionModal = ({ bookingTimeSelected, onClose, addEvent }) => {
                   address,
                   city,
                   state,
-                  date: new Date(bookingTimeSelected).getTime() / 1000,
+                  date: getTime(new Date(bookingTimeSelected)),
                 });
                 onClose();
               }}
