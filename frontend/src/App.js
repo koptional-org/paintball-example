@@ -17,8 +17,6 @@ function App() {
     console.log(values);
   };
 
-  console.log(events);
-
   return (
     <>
       {bookingTimeSelected && (

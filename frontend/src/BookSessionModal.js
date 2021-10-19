@@ -113,7 +113,7 @@ const BookSessionModal = ({ bookingTimeSelected, onClose, addEvent }) => {
                       type="text"
                       name="state"
                       id="state"
-                      placeholder="State"
+                      maxLength={2}
                       value={state}
                       onChange={(event) => setState(event.target.value)}
                       className="px-3 py-3 placeholder-gray-600 text-gray-800 bg-gray-100 rounded focus:shadow-outline focus:outline-none w-full"
