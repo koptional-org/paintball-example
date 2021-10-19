@@ -13,9 +13,11 @@ const aboutImageTwo = "/assets/exampleImage2.jpg";
 function App() {
   const events = [{ title: "Today's event", date: new Date() }];
   const [bookingTimeSelected, setBookingTimeSelected] = useState();
-  const clearSelectedDate = () => {
-    setBookingTimeSelected();
+  const addEvent = (values) => {
+    console.log(values);
   };
+
+  console.log(events);
 
   return (
     <>
@@ -23,7 +25,8 @@ function App() {
         <>
           <BookSessionModal
             bookingTimeSelected={bookingTimeSelected}
-            onClose={() => clearSelectedDate}
+            onClose={() => setBookingTimeSelected()}
+            addEvent={addEvent}
           />
         </>
       )}
@@ -38,6 +41,7 @@ function App() {
           <div className="md:w-8/12 lg:6/12 bg-white shadow-xl rounded p-3 h-auto">
             <FullCalendar
               initialView="timeGridWeek"
+              firstDay={1}
               slotMinTime="09:00:00"
               slotMaxTime="18:00:00"
               slotLabelInterval="00:20:00"
