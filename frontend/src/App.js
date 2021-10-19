@@ -20,6 +20,8 @@ function App() {
       .then((data) => setEvents(data.rows));
   }, []);
 
+  console.log(events);
+
   const addEvent = (values) => {
     const requestOptions = {
       method: "POST",
@@ -72,7 +74,13 @@ function App() {
               slotLabelInterval="00:20:00"
               slotDuration="00:20:00"
               dateClick={(info) => {
-                setBookingTimeSelected(info.dateStr);
+                var date = new Date(info.dateStr);
+                var today = new Date();
+                if (date < today) {
+                  alert("Please select a future date.");
+                } else {
+                  setBookingTimeSelected(info.dateStr);
+                }
               }}
               allDaySlot={false}
               plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
