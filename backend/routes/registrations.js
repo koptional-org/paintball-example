@@ -23,7 +23,6 @@ db.close();
  * fetch schedule
  */
 router.get("/", function (req, res) {
-  // Fetch from the database
   const db = new sqlite3.Database("./paintball.db", (err) => {
     if (err) {
       console.log(err.message);
