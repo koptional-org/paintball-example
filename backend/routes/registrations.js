@@ -54,17 +54,16 @@ router.post(
     body("phone").isMobilePhone(),
     body("email").isEmail({}),
     body("address").isString(),
-    body("state").isIn(Object.values(states)),
+    body("state").isIn(Object.keys(states)),
     body("city").isString(),
     body("name").isString(),
     body("date").isInt(),
-    body("hasSignedWaiver").isInt(),
   ],
   (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       console.log("Got an error");
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).send({ errors: errors.array(), validation: true });
     }
     const db = new sqlite3.Database("./paintball.db", (err) => {
       if (err) {
@@ -82,7 +81,7 @@ router.post(
         req.body["city"],
         req.body["name"],
         req.body["date"],
-        req.body["hasSignedWaiver"],
+        0,
       ],
       (err) => {
         if (err) {

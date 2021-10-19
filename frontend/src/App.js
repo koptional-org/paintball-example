@@ -15,7 +15,7 @@ function App() {
   const [events, setEvents] = useState({});
 
   useEffect(() => {
-    fetch("http://localhost:8000/registrations")
+    fetch("https://1bc7-24-14-12-32.ngrok.io/registrations")
       .then((response) => response.json())
       .then((data) => setEvents(data.rows));
   }, []);
@@ -25,11 +25,14 @@ function App() {
   const addEvent = (values) => {
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(values),
-      mode: "no-cors",
     };
-    fetch("http://localhost:8000/registrations", requestOptions)
+    console.log(JSON.stringify(values));
+    fetch("https://1bc7-24-14-12-32.ngrok.io/registrations", requestOptions)
       .then(async (response) => {
         const isJson = response.headers
           .get("content-type")
@@ -37,11 +40,13 @@ function App() {
         const data = isJson && (await response.json());
         if (!response.ok) {
           const error = (data && data.message) || response.status;
+          console.log(response);
           return Promise.reject(error);
         }
         alert("Booking Confirmed! Please check your email for your waiver.");
       })
       .catch((error) => {
+        console.log(error);
         alert("There was an error!", error);
       });
   };
