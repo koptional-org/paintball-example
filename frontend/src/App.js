@@ -1,8 +1,10 @@
+import React, { useState } from "react";
 import "./App.css";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import BookSessionModal from "./BookSessionModal";
 
 const backgroundUrl = "/assets/mainHeader.jpg";
 const aboutImageOne = "/assets/exampleImage1.jpg";
@@ -10,9 +12,21 @@ const aboutImageTwo = "/assets/exampleImage2.jpg";
 
 function App() {
   const events = [{ title: "Today's event", date: new Date() }];
+  const [bookingTimeSelected, setBookingTimeSelected] = useState();
+  const clearSelectedDate = () => {
+    setBookingTimeSelected();
+  };
 
   return (
     <>
+      {bookingTimeSelected && (
+        <>
+          <BookSessionModal
+            bookingTimeSelected={bookingTimeSelected}
+            onClose={() => clearSelectedDate}
+          />
+        </>
+      )}
       <div
         className="hero min-h-screen"
         style={{
@@ -29,7 +43,7 @@ function App() {
               slotLabelInterval="00:20:00"
               slotDuration="00:20:00"
               dateClick={(info) => {
-                console.log(info);
+                setBookingTimeSelected(info.dateStr);
               }}
               allDaySlot={false}
               plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
