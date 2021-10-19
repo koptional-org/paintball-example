@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -11,10 +11,37 @@ const aboutImageOne = "/assets/exampleImage1.jpg";
 const aboutImageTwo = "/assets/exampleImage2.jpg";
 
 function App() {
-  const events = [{ title: "Today's event", date: new Date() }];
   const [bookingTimeSelected, setBookingTimeSelected] = useState();
+  const [events, setEvents] = useState({});
+
+  useEffect(() => {
+    fetch("http://localhost:8000/")
+      .then((response) => response.json())
+      .then((data) => setEvents(data));
+  }, []);
+
   const addEvent = (values) => {
-    console.log(values);
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+      mode: "no-cors",
+    };
+    fetch("http://localhost:8000/", requestOptions)
+      .then(async (response) => {
+        const isJson = response.headers
+          .get("content-type")
+          ?.includes("application/json");
+        const data = isJson && (await response.json());
+        if (!response.ok) {
+          const error = (data && data.message) || response.status;
+          return Promise.reject(error);
+        }
+        alert("Booking Confirmed! Please check your email for your waiver.");
+      })
+      .catch((error) => {
+        alert("There was an error!", error);
+      });
   };
 
   return (
