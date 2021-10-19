@@ -15,9 +15,9 @@ function App() {
   const [events, setEvents] = useState({});
 
   useEffect(() => {
-    fetch("http://localhost:8000/")
+    fetch("http://localhost:8000/registrations")
       .then((response) => response.json())
-      .then((data) => setEvents(data));
+      .then((data) => setEvents(data.rows));
   }, []);
 
   const addEvent = (values) => {
@@ -27,7 +27,7 @@ function App() {
       body: JSON.stringify(values),
       mode: "no-cors",
     };
-    fetch("http://localhost:8000/", requestOptions)
+    fetch("http://localhost:8000/registrations", requestOptions)
       .then(async (response) => {
         const isJson = response.headers
           .get("content-type")
