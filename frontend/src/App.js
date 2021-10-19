@@ -2,10 +2,7 @@ import "./App.css";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
-
-import "@fullcalendar/core/main.css";
-import "@fullcalendar/daygrid/main.css";
-import "@fullcalendar/timegrid/main.css";
+import interactionPlugin from "@fullcalendar/interaction";
 
 const backgroundUrl = "/assets/mainHeader.jpg";
 const aboutImageOne = "/assets/exampleImage1.jpg";
@@ -24,15 +21,18 @@ function App() {
       >
         <div className="hero-overlay bg-opacity-60"></div>
         <div className="text-center flex justify-center align-center text-neutral w-full container">
-          <div className="md:w-8/12 lg:6/12 bg-white shadow-xl rounded p-3">
+          <div className="md:w-8/12 lg:6/12 bg-white shadow-xl rounded p-3 h-auto">
             <FullCalendar
-              defaultView="timeGridWeek"
-              header={{
-                left: "prev,next",
-                center: "title",
-                right: "dayGridMonth,timeGridWeek,timeGridDay",
+              initialView="timeGridWeek"
+              slotMinTime="09:00:00"
+              slotMaxTime="18:00:00"
+              slotLabelInterval="00:20:00"
+              slotDuration="00:20:00"
+              dateClick={(info) => {
+                console.log(info);
               }}
-              plugins={[dayGridPlugin, timeGridPlugin]}
+              allDaySlot={false}
+              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
               events={events}
             />
           </div>
