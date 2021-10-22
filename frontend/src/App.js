@@ -5,8 +5,8 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import BookSessionModal from "./BookSessionModal";
-import { postEvent, fetchEvents } from "./api";
 import { format } from "date-fns";
+import { useSchedule } from "./hooks/schedule";
 
 const backgroundUrl = "/assets/mainHeader.jpg";
 const aboutImageOne = "/assets/exampleImage1.jpg";
@@ -14,28 +14,23 @@ const aboutImageTwo = "/assets/exampleImage2.jpg";
 
 function App() {
   const [bookingTimeSelected, setBookingTimeSelected] = useState();
-  const [events, setEvents] = useState([]);
 
+  const { events, loading, error, addEvent } = useSchedule();
+
+  console.log(events);
   useEffect(() => {
-    fetchEvents(setEvents);
-  }, []);
-
-  const addEvent = (values) => {
-    postEvent(values);
-    fetchEvents(setEvents);
-  };
+    if (error) {
+      alert(`There was an error: ${error.message}`);
+    }
+  }, [error]);
 
   const formattedEvents = useMemo(() => {
-    let modifiedEvents = [];
-    (events || []).map((event) =>
-      modifiedEvents.push({
-        title: event.name,
-        start: format(event.date, "yyyy-MM-dd HH:mm"),
-        id: event.date,
-        backgroundColor: `${event.hasSignedWaiver === 0 ? "red" : "green"}`,
-      })
-    );
-    return modifiedEvents;
+    return (events || []).map((event) => ({
+      title: event.name,
+      start: format(event.date, "yyyy-MM-dd HH:mm"),
+      id: event.date,
+      backgroundColor: `${event.hasSignedWaiver === 0 ? "red" : "green"}`,
+    }));
   }, [events]);
 
   return (
