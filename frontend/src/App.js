@@ -20,6 +20,11 @@ function App() {
     fetchEvents(setEvents);
   }, []);
 
+  const addEvent = (values) => {
+    postEvent(values);
+    fetchEvents(setEvents);
+  };
+
   const formattedEvents = useMemo(() => {
     let modifiedEvents = [];
     (events || []).map((event) =>
@@ -32,11 +37,6 @@ function App() {
     );
     return modifiedEvents;
   }, [events]);
-
-  const addEvent = (values) => {
-    postEvent(values);
-    fetchEvents(setEvents);
-  };
 
   return (
     <>
