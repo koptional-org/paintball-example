@@ -7,7 +7,7 @@ const registrationsRouter = require("./routes/registrations");
 const setupDb = require("./utils/setup");
 
 const app = express();
-const port = 8001;
+const port = 8000;
 
 app.use(
   cors({

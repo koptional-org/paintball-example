@@ -33,6 +33,7 @@ router.post(
       console.log("Got an error");
       return res.status(400).send({ errors: errors.array(), validation: true });
     }
+    console.log("Got here");
 
     const reg = await sequelize.models.Registration.create({
       phone: req.body["phone"],

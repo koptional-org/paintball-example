@@ -16,10 +16,13 @@ function App() {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
+    if (bookingTimeSelected) {
+      return;
+    }
     fetch("http://localhost:8000/registrations")
       .then((response) => response.json())
       .then((data) => setEvents(data.rows));
-  }, []);
+  }, [bookingTimeSelected]);
 
   const formattedEvents = useMemo(() => {
     let modifiedEvents = [];
