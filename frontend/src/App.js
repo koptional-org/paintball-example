@@ -31,7 +31,7 @@ function App() {
       title: event.name,
       start: format(event.date, "yyyy-MM-dd HH:mm"),
       id: event.date,
-      backgroundColor: `${event.hasSignedWaiver === 0 ? "red" : "green"}`,
+      backgroundColor: `${event.hasSignedWaiver ? "green" : "red"}`,
     }));
   }, [events]);
 
