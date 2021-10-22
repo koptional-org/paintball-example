@@ -3,6 +3,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = new Sequelize({
   dialect: "sqlite",
   storage: "./paintball.db",
+  logging: false,
 });
 
 const Registration = sequelize.define("Registration", {
