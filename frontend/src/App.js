@@ -5,6 +5,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import BookSessionModal from "./BookSessionModal";
+import { postEvent, fetchEvents } from "./api";
 import { format } from "date-fns";
 
 const backgroundUrl = "/assets/mainHeader.jpg";
@@ -16,9 +17,7 @@ function App() {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/registrations")
-      .then((response) => response.json())
-      .then((data) => setEvents(data.rows));
+    fetchEvents(setEvents);
   }, []);
 
   const formattedEvents = useMemo(() => {
@@ -35,29 +34,8 @@ function App() {
   }, [events]);
 
   const addEvent = (values) => {
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    };
-    fetch("http://localhost:8000/registrations", requestOptions)
-      .then(async (response) => {
-        const isJson = response.headers
-          .get("content-type")
-          ?.includes("application/json");
-        const data = isJson && (await response.json());
-        if (!response.ok) {
-          const error = (data && data.message) || response.status;
-          return Promise.reject(error);
-        }
-        alert("Booking Confirmed! Please check your email for your waiver.");
-      })
-      .catch((error) => {
-        alert("There was an error!", error);
-      });
+    postEvent(values);
+    fetchEvents(setEvents);
   };
 
   return (
@@ -78,16 +56,19 @@ function App() {
         }}
       >
         <div className="hero-overlay bg-opacity-60"></div>
-        <div class="text-center hero-content">
-          <div class="max-w-md">
-            <h1 class="mb-5 text-5xl font-bold text-white">
+        <div className="text-center hero-content">
+          <div className="max-w-md">
+            <h1 className="mb-5 text-5xl font-bold text-white">
               Welcome to Extreme Paintball!
             </h1>
-            <p class="my-8 text-white">
+            <p className="my-8 text-white">
               Extreme Paintball provides fun for you, your friends, your family
               and even your co-workers!
             </p>
-            <a href="#book" class="btn btn-primary text-white w-full shadow-lg">
+            <a
+              href="#book"
+              className="btn btn-primary text-white w-full shadow-lg"
+            >
               View Availability
             </a>
           </div>
