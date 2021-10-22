@@ -4,9 +4,10 @@ const path = require("path");
 const logger = require("morgan");
 var cors = require("cors");
 const registrationsRouter = require("./routes/registrations");
+const setupDb = require("./utils/setup");
 
 const app = express();
-const port = 8000;
+const port = 8001;
 
 app.use(
   cors({
@@ -19,8 +20,6 @@ app.use(express.json());
 
 app.use("/registrations", registrationsRouter);
 
-app.post("/test", (req, res) => res.send(req.body));
-
 app.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
@@ -29,8 +28,10 @@ app.use(function (err, req, res, next) {
   res.send("error");
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+setupDb().then(() => {
+  app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`);
+  });
 });
 
 module.exports = app;
