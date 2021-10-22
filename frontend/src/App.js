@@ -95,11 +95,11 @@ function App() {
       </div>
       <section className="bg-gray-100 border-b py-8" id="book">
         <div className="container max-w-5xl mx-auto m-8">
-          <h2 className="w-full my-2 text-5xl font-black leading-tight text-center text-gray-800">
+          <h2 className="my-2 text-5xl font-black leading-tight text-center text-gray-800">
             Select a date to book
           </h2>
-          <div className="w-full bg-white shadow-xl rounded-lg p-3 h-auto my-8">
-            <h3 className="text-2xl text-gray-800 font-bold leading-none mb-3">
+          <div className="bg-white shadow-xl rounded-lg p-3 h-auto my-8">
+            <h3 className="text-lg text-gray-800 font-bold leading-none mb-3">
               If your event is red please check your email to sign our waiver.
             </h3>
             <FullCalendar
@@ -158,7 +158,7 @@ function App() {
                   Fun For The Whole Family
                 </h3>
                 <p className="text-gray-600 mb-8">
-                  We offer all types of packages and any level of experience.
+                  We offer all types of packages at any level of experience.
                   Book your experience today!
                 </p>
               </div>
