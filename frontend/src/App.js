@@ -4,6 +4,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import BarLoader from "react-spinners/BarLoader";
 import BookSessionModal from "./BookSessionModal";
 import { format } from "date-fns";
 import { useSchedule } from "./hooks/schedule";
@@ -12,12 +13,13 @@ const backgroundUrl = "/assets/mainHeader.jpg";
 const aboutImageOne = "/assets/exampleImage1.jpg";
 const aboutImageTwo = "/assets/exampleImage2.jpg";
 
+const override = "display: block;margin: 0 auto;";
+
 function App() {
   const [bookingTimeSelected, setBookingTimeSelected] = useState();
 
   const { events, loading, error, addEvent } = useSchedule();
 
-  console.log(events);
   useEffect(() => {
     if (error) {
       alert(`There was an error: ${error.message}`);
@@ -43,6 +45,21 @@ function App() {
             addEvent={addEvent}
           />
         </>
+      )}
+      {loading && (
+        <div className="w-full h-full fixed block top-0 left-0 bg-gradient-to-r from-primary via-secondary to-primary opacity-95 z-50">
+          <div className="text-dark sweet-loading mt-32">
+            <p className="text-5xl font-medium text-center text-white">
+              Extreme Paintball
+            </p>
+            <p className="text-xl font-medium text-center mt-4 text-white">
+              Loading...
+            </p>
+            <p className="mt-12">
+              <BarLoader color="white" css={override} loading={75} />
+            </p>
+          </div>
+        </div>
       )}
       <div
         className="hero min-h-screen"
