@@ -14,5 +14,8 @@
     "morgan": "~1.9.1",
     "sequelize": "^6.7.0",
     "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.0"
   }
 }
