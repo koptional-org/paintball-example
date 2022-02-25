@@ -30,11 +30,8 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log("Got an error");
       return res.status(400).send({ errors: errors.array(), validation: true });
     }
-    console.log("Got here");
-
     const reg = await sequelize.models.Registration.create({
       phone: req.body["phone"],
       email: req.body["email"],
@@ -45,8 +42,6 @@ router.post(
       date: req.body["date"],
       hasSignedWaiver: false,
     });
-    console.log(`Created a new registration with id ${reg.id}`);
-
     res.send({ success: true });
   }
 );
