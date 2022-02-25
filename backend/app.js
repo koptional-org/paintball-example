@@ -1,3 +1,4 @@
+require("dotenv").config();
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
@@ -8,6 +9,13 @@ const setupDb = require("./utils/setup");
 
 const app = express();
 const port = 8000;
+
+if (!process.env.WAIVERCAT_API_KEY) {
+  console.error(
+    "Please create a .env file in this directory and add your API key as WAIVERCAT_API_KEY"
+  );
+  process.exit(1);
+}
 
 app.use(
   cors({
