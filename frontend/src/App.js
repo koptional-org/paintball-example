@@ -18,7 +18,8 @@ const override = "display: block;margin: 0 auto;";
 function App() {
   const [bookingTimeSelected, setBookingTimeSelected] = useState();
 
-  const { events, loading, error, addEvent } = useSchedule();
+  const { events, loading, error, addEvent, checkForSignatures } =
+    useSchedule();
 
   useEffect(() => {
     if (error) {
@@ -95,6 +96,14 @@ function App() {
             <h3 className="text-lg text-gray-800 font-bold leading-none mb-3">
               If your event is red please check your email to sign our waiver.
             </h3>
+            <div>
+              <button
+                onClick={checkForSignatures}
+                className="btn btn-primary text-white w-full shadow-lg"
+              >
+                Check for signed waivers
+              </button>
+            </div>
             <FullCalendar
               initialView="timeGridWeek"
               firstDay={1}

@@ -7,8 +7,9 @@ export const useSchedule = () => {
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
+  const fetchRegistrations = useCallback(() => {
     setLoading(true);
+
     fetch(`${ENDPOINT}/registrations`)
       .then((response) => response.json())
       .then(({ rows }) => {
@@ -20,6 +21,10 @@ export const useSchedule = () => {
       })
       .then(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    fetchRegistrations();
+  }, [fetchRegistrations]);
 
   const addEvent = useCallback(
     (evt) => {
@@ -47,5 +52,9 @@ export const useSchedule = () => {
     [events]
   );
 
-  return { loading, events, error, addEvent };
+  const checkForSignatures = useCallback(() => {
+    fetch(`${ENDPOINT}/registrations/cron`).then(fetchRegistrations);
+  }, [fetchRegistrations]);
+
+  return { loading, events, error, addEvent, checkForSignatures };
 };
