@@ -39,6 +39,10 @@ const Registration = sequelize.define("Registration", {
     type: DataTypes.BOOLEAN,
     allowNull: false,
   },
+  envelopeId: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 });
 
 module.exports = { sequelize, Registration };
